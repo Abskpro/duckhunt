@@ -56,10 +56,9 @@ const dog = {
     }
     // if the frame is jump state increase y
     if (this.frame % this.animation.length == 14) {
-      state.current = state.game;
       this.y += this.gravity;
+      state.current = state.game;
     }
     this.x += this.speed;
-    console.log('asdf');
   },
 };
