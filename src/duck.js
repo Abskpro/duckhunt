@@ -36,7 +36,14 @@ const duck = {
         { sX: 209, sY: 193 },
         { sX: 170, sY: 193 }
     ],
-    animationShot: [{ sX: 240, sY: 130 }],
+    animationShot: [
+        { sX: 240, sY: 130 },
+        { sX: 240, sY: 130 },
+        { sX: 240, sY: 130 },
+        { sX: 240, sY: 130 },
+        { sX: 240, sY: 130 },
+        { sX: 240, sY: 130 },
+    ],
     // x1: 100,
     // y1: 300,
     w1: 25,
@@ -48,10 +55,12 @@ const duck = {
 
     frame: 0,
     gravity: 0.3,
-    speedX: 3,
-    speedY: 3,
+    speedX: 1,
+    speedY: 1,
     direction: "",
     control:false,
+    pause:false,
+    fall:false,
 
     draw: function () {
         let duckFlyRight = this.animationUpRight[this.frame];
@@ -60,6 +69,7 @@ const duck = {
         let duckDrop = this.animationDrop[this.frame];
         let duckFlyLeft = this.animationUpLeft[this.frame];
         let duckFly = this.animationUp[this.frame];
+        let duckShot = this.animationShot[this.frame];
 
         if (this.direction === "upright" || this.direction === "downright") {
             ctx.drawImage(
@@ -130,7 +140,47 @@ const duck = {
                 this.h
             )
         }
+
+        if(this.direction === "pause"){
+            ctx.drawImage(
+                sprite2,
+                duckShot.sX,
+                duckShot.sY,
+                this.w,
+                this.h,
+                this.x,
+                this.y,
+                this.w,
+                this.h
+            )
+        }
+
+        if(this.direction === "drop"){
+            ctx.drawImage(
+                sprite2,
+                duckDrop.sX,
+                duckDrop.sY,
+                this.w,
+                this.h,
+                this.x,
+                this.y,
+                this.w,
+                this.h
+            )
+        }
         
+    },
+
+    checker:function(deltaX,deltaY){
+        x2 = this.x + this.w;
+        y2 = this.y + this.h;
+        if(deltaX >= this.x && deltaX <= x2 && deltaY >= this.y && deltaY <= y2){
+            console.log("gotcha");
+            this.control = true
+        }else{
+            console.log("missed");
+            this.control = false;
+        }
     },
 
     bounceX: function () {
@@ -152,21 +202,22 @@ const duck = {
         this.period = 10;
         this.frame += frames % this.period == 0 ? 1 : 0;
         this.frame = this.frame % this.animationUpRight.length;
-        if(this.control === false){
+        if(!this.control){
             this.bounceX();
             this.x += this.speedX;
             this.bounceY();
             this.y += this.speedY;
+
+            if(this.speedX > 0 && this.speedY < 0){
+                this.direction = "upright";
+            }else if(this.speedX < 0 && this.speedX < 0){
+                this.direction = "upleft";
+            }else if(this.speedX < 0 && this.speedY > 0){
+                this.direction = "downleft"; 
+            }else if(this.speedX > 0 && this.speedY > 0){
+                this.direction = "downright";
+            }
         }
-            
-        if(this.speedX > 0 && this.speedY < 0){
-            this.direction = "upright";
-        }else if(this.speedX < 0 && this.speedX < 0){
-            this.direction = "upleft";
-        }else if(this.speedX < 0 && this.speedY > 0){
-            this.direction = "downleft"; 
-        }else if(this.speedX > 0 && this.speedY > 0){
-            this.direction = "downright";
-        }
+                 
     }
 };

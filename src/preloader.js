@@ -1,5 +1,9 @@
 const cvs = document.getElementById('myCanvas');
 const ctx = cvs.getContext('2d');
+    elemLeft = cvs.offsetLeft;
+    elemTop = cvs.offsetTop;
+    context = cvs.getContext('2d');
+    elements = [];
 
 //game vars and const
 let frames = 0;
@@ -26,6 +30,13 @@ const state = {
 };
 
 cvs.addEventListener('click', function () {
+    var x = event.pageX - elemLeft;
+        y = event.pageY - elemTop;
+    if(state.current === 1){
+        duck.checker(x,y);   
+    }
+
+
   switch (state.current) {
     case state.getReady:
       state.current = state.game;
