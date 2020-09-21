@@ -20,6 +20,7 @@ const dog = {
   y: 355,
   w: 57,
   h: 45,
+  period:20,
 
   frame: 0,
   speed: 0.95,
@@ -42,10 +43,16 @@ const dog = {
     );
   },
 
+    pop:function (){
+        this.frame += frames % this.period == 0 ? 1 : 0;
+
+    },
+
+
   update: function () {
     // if the dog is not in the center of the canvas
     //if the game state is get ready state, the dog must walk to the center of the screen
-    this.period = 20;
+    // this.period = 20;
     this.frame += frames % this.period == 0 ? 1 : 0;
     //frame goex t 0 to 8 then to again 0
     // this.frame = this.frame % this.animation.length;

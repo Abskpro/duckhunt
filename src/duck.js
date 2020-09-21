@@ -55,8 +55,8 @@ const duck = {
 
     frame: 0,
     gravity: 0.3,
-    speedX: 1,
-    speedY: 1,
+    speedX: 2,
+    speedY: 2,
     direction: "",
     control:false,
     pause:false,
@@ -160,12 +160,12 @@ const duck = {
                 sprite2,
                 duckDrop.sX,
                 duckDrop.sY,
-                this.w,
-                this.h,
+                this.w1,
+                this.h1,
                 this.x,
                 this.y,
-                this.w,
-                this.h
+                this.w1,
+                this.h1
             )
         }
         
@@ -198,7 +198,8 @@ const duck = {
         this.control = !this.control;
         console.log(this.control);
     },
-    update: function () {
+
+    updateFly: function () {
         this.period = 10;
         this.frame += frames % this.period == 0 ? 1 : 0;
         this.frame = this.frame % this.animationUpRight.length;
@@ -217,7 +218,21 @@ const duck = {
             }else if(this.speedX > 0 && this.speedY > 0){
                 this.direction = "downright";
             }
+        }else{
+            if(this.direction != "drop"){
+                this.direction = "pause"; 
+            }
+            setTimeout(()=>{
+                if(this.y!=352){
+                    this.direction = "drop"
+                    this.y -= this.speedY;  
+                }else{
+                    state.current = state.dogDisp;
+                }
+            },1000)
         }
                  
-    }
+    },
+
+         
 };

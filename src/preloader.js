@@ -27,6 +27,7 @@ const state = {
   current: 0,
   getReady: 0,
   game: 1,
+  dogDisp:2,
 };
 
 cvs.addEventListener('click', function () {

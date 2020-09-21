@@ -16,7 +16,9 @@ function update() {
   if (state.current == state.getReady) {
     dog.update();
   } else if (state.current == state.game) {
-    duck.update();
+    duck.updateFly();
+  }else if (state.current == state.dogDisp){
+    dog.pop();
   }
 }
 
